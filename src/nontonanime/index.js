@@ -4,7 +4,7 @@ const api_client = require("../helpers/api_client");
 const res_message = require("../helpers/res_message");
 
 class NontonAnimeRoutes {
-  _uri = "https://nontonanimeid.cfd/";
+  _uri = "https://nontonanimeid.lol/";
   _router = express.Router();
 
   get router() {
@@ -117,8 +117,7 @@ class NontonAnimeRoutes {
       );
     });
     this._router.get("/anime_list", async (req, res) => {
-      const page = res_message.valXss(req.query.page) ?? 1;
-      const response = await api_client.get(`${this.uri}/anime/page/${page}`);
+      const response = await api_client.get(`${this.uri}/anime/page/1`);
       if (response != "") {
         const $ = cheerio.load(response);
         let data = [];
@@ -184,7 +183,7 @@ class NontonAnimeRoutes {
       );
     });
     this._router.get("/search", async (req, res) => {
-      const search = res_message.valXss(req.query.search) ?? 1;
+      const search = res_message.valXss(req.query.search);
       const response = await api_client.get(`${this.uri}/?s=${search}`);
       if (response != "") {
         const $ = cheerio.load(response);
